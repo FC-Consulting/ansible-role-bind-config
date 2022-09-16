@@ -1,0 +1,16 @@
+---
+_service:
+  default:
+    - bind9
+  Alpine:
+    - named
+  Debian:
+    - bind9
+  CentOS-7:
+    - bind9
+  CentOS:
+    - bind9
+  RedHat:
+    - bind9
+
+service: "{{ _service[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_service[ansible_distribution] | default(_service[ansible_os_family] | default (_service['default']))) }}"

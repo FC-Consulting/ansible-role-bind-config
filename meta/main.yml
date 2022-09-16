@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: Florent COLINET
+  role_name: bind-config
+  description: Ansible Role config bind in standalone
+  license: GPLv3
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: Alpine
+      versions:
+        - all
+
+  galaxy_tags:
+    - bind
+
+  dependencies: 
+    - src: redbeard28.basetools
+    - src: redbeard28.pip3

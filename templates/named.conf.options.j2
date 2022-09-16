@@ -1,0 +1,59 @@
+# {{ ansible_managed }} - {{ ansible_date_time.epoch }}
+
+options {
+    directory "/var/bind";
+    pid-file "/var/run/named/named.pid";
+
+#    auth-nxdomain no;    # conform to RFC1035
+
+    dnssec-validation no;
+
+	{% if bind_forwarders is defined %}
+    forwarders {
+        {% for ips in bind_forwarders %}
+        {{ ips }};
+        {% endfor %}
+    };
+	{% endif %}
+
+	{% if bind_allow_recursion is defined %}
+    recursion yes;
+    allow-recursion {
+        {% for ips in bind_allow_recursion %}
+        {{ ips }};
+        {% endfor %}
+    };
+	{% endif %}
+
+	{% if bind_listen_on_v6 is defined %}
+	listen-on-v6 {
+        {% for ips in bind_listen_on_v6 %}
+        {{ ips }};
+        {% endfor %}
+	};
+	{% endif %}
+	
+	{% if bind_listen_on is defined %}
+	listen-on {
+        {% for ips in bind_listen_on %}
+        {{ ips }};
+        {% endfor %}
+	};
+	{% endif %}
+
+	{% if bind_allow_query is defined %}
+	allow-query {
+        {% for ips in bind_allow_query %}
+        {{ ips }};
+        {% endfor %}
+	};
+	{% endif %}
+
+	{% if bind_allow_query_cache is defined %}
+	allow-query-cache {
+        {% for ips in bind_allow_query_cache %}
+        {{ ips }};
+        {% endfor %}
+	};
+	{% endif %}
+};

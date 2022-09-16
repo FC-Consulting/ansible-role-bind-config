@@ -1,0 +1,21 @@
+---
+- name: Install config file
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/bind/{{ item }}"
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    mode: 0644
+  loop:
+    - named.conf.options
+    - named.conf.zones
+  notify: bind9_restart
+
+- name: Install zone file
+  template:
+    src: zone.j2
+    dest: /var/bind/{{ domain }}.zone
+    owner: "{{ bind_owner }}"
+    group: "{{ bind_group }}"
+    mode: 0644
+  notify: bind9_restart
